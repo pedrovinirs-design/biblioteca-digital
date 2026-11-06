@@ -1,0 +1,222 @@
+
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Biblioteca Digital API",
+    "description": "Documentação da API da Biblioteca Digital"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "paths": {
+    "/books": {
+      "get": {
+        "summary": "Listar livros",
+        "description": "Lista os livros cadastrados, permitindo filtros, paginação e ordenação.",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Filtrar por título",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "author",
+            "in": "query",
+            "description": "Filtrar por autor",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "genre",
+            "in": "query",
+            "description": "Filtrar por gênero",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Número da página",
+            "required": false,
+            "type": "integer",
+            "default": 1
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Quantidade de livros por página",
+            "required": false,
+            "type": "integer",
+            "default": 5
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Campo utilizado para ordenação",
+            "required": false,
+            "type": "string",
+            "enum": ["title", "author", "year", "genre"]
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Ordem crescente ou decrescente",
+            "required": false,
+            "type": "string",
+            "enum": ["asc", "desc"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Livros encontrados com sucesso"
+          },
+          "400": {
+            "description": "Parâmetro inválido"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastrar um livro",
+        "description": "Adiciona um novo livro à biblioteca digital.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados do livro",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "O Senhor dos Anéis"
+                },
+                "author": {
+                  "type": "string",
+                  "example": "J.R.R. Tolkien"
+                },
+                "year": {
+                  "type": "integer",
+                  "example": 1954
+                },
+                "genre": {
+                  "type": "string",
+                  "example": "Fantasia"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Livro cadastrado com sucesso"
+          },
+          "400": {
+            "description": "Dados inválidos"
+          },
+          "500": {
+            "description": "Erro interno do servidor"
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "summary": "Buscar livro por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do livro",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Livro encontrado"
+          },
+          "400": {
+            "description": "ID inválido"
+          },
+          "404": {
+            "description": "Livro não encontrado"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Atualizar livro",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "author": {
+                  "type": "string"
+                },
+                "year": {
+                  "type": "integer"
+                },
+                "genre": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Livro atualizado"
+          },
+          "400": {
+            "description": "Dados ou ID inválidos"
+          },
+          "404": {
+            "description": "Livro não encontrado"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir livro",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do livro",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Livro excluído com sucesso"
+          },
+          "400": {
+            "description": "ID inválido"
+          },
+          "404": {
+            "description": "Livro não encontrado"
+          }
+        }
+      }
+    }
+  }
+}

@@ -24,7 +24,7 @@ const bookSchema = new mongoose.Schema({
     },
 
     genre: {
-        tyoe: String,
+        type: String,
         required: [true, "O gênero é brogatório"]
     },
 

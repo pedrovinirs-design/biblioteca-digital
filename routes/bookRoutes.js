@@ -21,7 +21,7 @@ router.get(
 
 router.patch(
     "/books/:id",
-    bookController.updateBokk
+    bookController.updateBook
 );
 
 router.delete(
